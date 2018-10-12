@@ -6,11 +6,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        BloomFilter filter = new BloomFilter(16, 3, 71);
-        filter.add(3);
-        filter.add(37);
-        filter.add(2);
+        int[] a = new int[]{12, 5, 1, 15};
+        int[] b = new int[]{8, 12, 10, 6};
+        int m = 16;
+        int p = 23;
+        BloomFilter filter = new BloomFilter(m, a, b, p);
+        filter.add(43);
+        filter.add(14);
+        filter.add(26);
         filter.printArray();
 
         for (int i = 0; i < 50; i++) {

@@ -3,65 +3,73 @@ import java.util.Arrays;
 public class BloomFilter {
 
     private boolean[] filter;
-    private int length;
+    private int m;
     private int k;
-    private HashFunction[] f;
+    private int[] a;
+    private int[] b;
+    private int p;
 
 
-    public BloomFilter(int length, int n, int p){
-        this.filter = new boolean[length];
-        this.length = length;
-        this.k = (int) (Math.log(2)*length/n);
-        f = new HashFunction[]{new HashFunction(46, 27, p, length),
-                new HashFunction(39, 11, p, length),
-                new HashFunction(55, 20, p, length)};
+    public BloomFilter(int m, int n){
+        this.filter = new boolean[m];
+        this.m = m;
+        this.k = (int) (Math.log(2)*m/n);
+        // construct random vectors a, b of length k and random prime p
     }
 
+    public BloomFilter(int m, int[] a, int[] b, int p){
+        this.a = a;
+        this.b = b;
+        this.p = p;
+        this.k = a.length;
+        this.m = m;
+        this.filter = new boolean[m];
+    }
 
     public boolean[] getFilter() {
-        return filter;
+        return this.filter;
     }
 
     public int getK(){
         return this.k;
     }
 
-    public int getLength() {
-        return length;
+    public int getM() {
+        return this.m;
     }
 
-    public void add(int value){
+    public void add(int x){
         for (int i = 0; i < k; i++) {
-            this.filter[f[i].compute(value)] = true;
+            this.filter[((a[i]*x + b[i]) % p) % m] = true;
         }
     }
 
-    public boolean check(int value){
+    public boolean check(int x){
         for (int i = 0; i < k; i++) {
-            if (!this.filter[f[i].compute(value)]) {return false;}
+            if (!this.filter[((a[i]*x + b[i]) % p) % m]) {return false;}
         }
         return true;
     }
 
     public void union(BloomFilter filter1){
-        if (this.length == filter1.getLength()){
-            for (int i = 0; i < length; i++) {
+        if (this.m == filter1.getM()){
+            for (int i = 0; i < m; i++) {
                 filter[i] = filter[i] || filter1.getFilter()[i];
             }
         }
     }
 
     public void intersect(BloomFilter filter1){
-        if (this.length == filter1.getLength()){
-            for (int i = 0; i < length; i++) {
+        if (this.m == filter1.getM()){
+            for (int i = 0; i < m; i++) {
                 this.filter[i] = filter[i] && filter1.getFilter()[i];
             }
         }
     }
 
     public void printArray(){
-        int[] a = new int[length];
-        for (int i = 0; i < length; i++) {
+        int[] a = new int[m];
+        for (int i = 0; i < m; i++) {
             if (filter[i]) {a[i] = 1;}
         }
         System.out.println(Arrays.toString(a));
