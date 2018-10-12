@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 
 public class BloomFilter {
 
@@ -14,7 +15,15 @@ public class BloomFilter {
         this.filter = new boolean[m];
         this.m = m;
         this.k = (int) (Math.log(2)*m/n);
-        // construct random vectors a, b of length k and random prime p
+        RandomPrime randomPrime = new RandomPrime();
+        this.p = randomPrime.generate(m);
+        this.a = new int[k];
+        this.b = new int[k];
+        Random ran = new Random();
+        for (int i = 0; i < k; i++) {
+            a[i] = ran.nextInt(p+1)+1;
+            b[i] = ran.nextInt(p+1);
+        }
     }
 
     public BloomFilter(int m, int[] a, int[] b, int p){
@@ -68,11 +77,13 @@ public class BloomFilter {
     }
 
     public void printArray(){
-        int[] a = new int[m];
+        int[] q = new int[m];
         for (int i = 0; i < m; i++) {
-            if (filter[i]) {a[i] = 1;}
+            if (filter[i]) {q[i] = 1;}
         }
+        System.out.println(Arrays.toString(q));
         System.out.println(Arrays.toString(a));
+        System.out.println((Arrays.toString(b)));
     }
 
     public void printBoolean(){

@@ -1,13 +1,13 @@
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
+
+
 public class RandomPrime
 {
-    public static void main(String arg[])
-    {
+    public int generate(int min){
         Random ran = new SecureRandom();
-        BigInteger a = BigInteger.probablePrime(20, ran);
-        int b = a.intValue();
-        System.out.println(b);
+        BigInteger a = BigInteger.probablePrime((int) (Math.log(min)/Math.log(2))+1, ran);
+        return a.intValue();
     }
 }
