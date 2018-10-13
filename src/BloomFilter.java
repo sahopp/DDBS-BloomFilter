@@ -47,9 +47,13 @@ public class BloomFilter {
         return this.m;
     }
 
+    public int getP() {
+        return this.p;
+    }
+
     public void add(int x){
         for (int i = 0; i < k; i++) {
-            this.filter[((a[i]*x + b[i]) % p) % m] = true;
+            this.filter[(int) (((long) a[i]*x + b[i]) % p) % m] = true;
         }
     }
 
