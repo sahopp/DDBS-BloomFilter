@@ -19,7 +19,7 @@ public class Main {
         }
         //filter.printArray();
         long stopTime = System.nanoTime();
-        System.out.println((stopTime - startTime)/1000000000.0);
-        System.out.println(Integer.toString(filter.getK()) + "  " + Integer.toString(filter.getP()));
+        System.out.println("Running time: " + (stopTime - startTime)/1000000000.0);
+        filter.printConfig();
     }
 }

@@ -21,7 +21,7 @@ public class BloomFilter {
         this.b = new int[k];
         Random ran = new Random();
         for (int i = 0; i < k; i++) {
-            a[i] = ran.nextInt(p+1)+1;
+            a[i] = ran.nextInt(p)+1;
             b[i] = ran.nextInt(p+1);
         }
     }
@@ -92,5 +92,13 @@ public class BloomFilter {
 
     public void printBoolean(){
         System.out.println(Arrays.toString(filter));
+    }
+
+    public void printConfig(){
+        System.out.println("k = " + k);
+        System.out.println("m = " + m);
+        System.out.println("p = " + p);
+        System.out.println("a = " + Arrays.toString(a));
+        System.out.println("b = " + Arrays.toString(b));
     }
 }
