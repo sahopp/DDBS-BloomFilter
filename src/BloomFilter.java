@@ -59,7 +59,7 @@ public class BloomFilter {
 
     public boolean check(int x){
         for (int i = 0; i < k; i++) {
-            if (!this.filter[((a[i]*x + b[i]) % p) % m]) {return false;}
+            if (!this.filter[(int) (((long) a[i]*x + b[i]) % p) % m]) {return false;}
         }
         return true;
     }
@@ -94,11 +94,20 @@ public class BloomFilter {
         System.out.println(Arrays.toString(filter));
     }
 
-    public void printConfig(){
-        System.out.println("k = " + k);
+    public void printConfig() {
         System.out.println("m = " + m);
         System.out.println("p = " + p);
+        System.out.println("k = " + k);
         System.out.println("a = " + Arrays.toString(a));
         System.out.println("b = " + Arrays.toString(b));
+        int sum = 0;
+        for (int i = 0; i < m; i++) {
+            if (filter[i]) {
+                sum += 1;
+            }
+        }
+        System.out.println("Number of bits set: " + sum);
+        System.out.println("Fraction of bits set: " + sum*1./m);
+        System.out.println("Estimated fraction of false positives: " + Math.pow(sum*1./m, 13));
     }
 }
